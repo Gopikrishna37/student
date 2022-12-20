@@ -1,0 +1,26 @@
+﻿@model task.Models.Marks
+
+@{
+    ViewBag.Title = "Mark";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mark</h2>
+
+<div>
+    <h4>Student Name:</h4><h3>Marks.StudentName</h3>
+
+                          <dl class="dl-horizontal">
+                            
+                              <tr>
+                                  <th>
+                                      @Html.DisplayNameFor(model => model.StudentId)
+                                  </th>
+
+
+                              </dl>
+</div>
+<p>
+
+    @Html.ActionLink("Back to List", "Index")
+</p>
