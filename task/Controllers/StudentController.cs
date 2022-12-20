@@ -7,11 +7,11 @@ using task.Models;
 using System.Data.Entity;
 using System.Net;
 
-
+//changes
 namespace task.Controllers
 {
     public class StudentController : Controller
-    {
+    { 
 
         /*   public static List<Student> studentList = new List<Student>{
                new Student() { StudentId = 1, StudentName = "John", Address = "chennai" } ,
