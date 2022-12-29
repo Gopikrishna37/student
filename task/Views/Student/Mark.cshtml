@@ -1,4 +1,4 @@
-﻿@model task.Models.Marks
+﻿@model task.Models.studentdto
 
 @{
     ViewBag.Title = "Mark";
@@ -8,19 +8,58 @@
 <h2>Mark</h2>
 
 <div>
-    <h4>Student Name:</h4><h3>Marks.StudentName</h3>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentId)
+        </dt>
 
-                          <dl class="dl-horizontal">
-                            
-                              <tr>
-                                  <th>
-                                      @Html.DisplayNameFor(model => model.StudentId)
-                                  </th>
+        <dd>
+            @Html.DisplayFor(model => model.StudentId)
+        </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentName)
+        </dt>
 
-                              </dl>
+        <dd>
+            @Html.DisplayFor(model => model.StudentName)
+        </dd>
+    </dl>
 </div>
-<p>
+<table class="table">
+    <tr>
+        <th>
+            <label>SubjectName</label>
+        </th>
+        <th>
+            <label>Marks</label>
+        </th>
+    </tr>
 
-    @Html.ActionLink("Back to List", "Index")
+    @foreach(var item in Model.Marks)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelitem => item.subjectname)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelitem => item.marks)
+            </td>
+
+        </tr>
+    }
+<tr>
+    <td>
+        @Html.DisplayNameFor(model => model.Total)
+    </td>
+
+    <td>
+        @Html.DisplayFor(model => model.Total)
+    </td>
+</tr>
+</table>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.StudentId  }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
 </p>

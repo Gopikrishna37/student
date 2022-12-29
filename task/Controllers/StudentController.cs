@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using task.Models;
 using System.Data.Entity;
 using System.Net;
+using System;
 
 //changes
 //checking git status
@@ -44,7 +42,7 @@ namespace task.Controllers
                 db.student.Add(std);
                 db.SaveChanges();
 
-                return Home();
+                return Home(std.StudentId);
 
             }
             return View(std);
@@ -78,7 +76,7 @@ namespace task.Controllers
             }
             return View(std);
         }
-
+/*
         [HttpGet]
         public ActionResult Delete(int? Id)
         {
@@ -92,14 +90,15 @@ namespace task.Controllers
                 return HttpNotFound();
             }
             return View(student);
-        }
+        }*/
 
         [HttpPost]
         public ActionResult Delete(int Id)
         {
-            Student student = db.student.Find(Id);
-            db.student.Remove(student);
-            db.SaveChanges();
+                Student student = db.student.Find(Id);
+                db.student.Remove(student);
+                db.SaveChanges();
+            
             return RedirectToAction("Index");
         }
         
@@ -118,7 +117,7 @@ namespace task.Controllers
             {
                 Session["StudentId"] = obj.StudentId;
                 Session["StudentName"] = obj.StudentName;
-                return View("Home");
+                return Home(obj.StudentId);
             }
             else
             {
@@ -132,28 +131,46 @@ namespace task.Controllers
         }
 
         [HttpGet]
-        public ActionResult Home()
+        public ActionResult Home(int? id)
         {
-            /*Student student = db.student.Find(std.StudentId);
+
+            Student student = db.student.Find(id);
             if (student != null)
             {
-                int s = student.StudentId;
-                return View(std);
-            }*/
-            return View("Home");
-            /*
-            else
-            {
-                return RedirectToAction("Home");
-            }*/
+                
+                return View("Home",student);
+            }
+            return View();
         }
 
         [HttpGet]
         public ActionResult Mark()
         {
-            Marks m = new Marks();
-            m.Student.StudentName;
-            return View();
+            var result = from ma in db.marks
+                         join st in db.student on ma.StudentId equals st.StudentId
+                         join sub in db.subject on ma.SubjectId equals sub.CourseId
+                         where ma.StudentId==2
+                         select new  {
+                             st.StudentId,
+                             st.StudentName,
+                             sub.CoursetName,
+                             ma.Score
+                         };
+
+            var result1 = result.Select(_ => new studentdto
+            {
+                StudentId = _.StudentId,
+                StudentName = _.StudentName,
+                Marks = result.Select(m => new Markdto()
+                {
+                    subjectname = m.CoursetName,
+                    marks = m.Score,
+                }).ToList(),
+                Total=result.Sum(m=>m.Score)
+             }).FirstOrDefault();
+
+                return View(result1);
+
         }
 
       

@@ -20,12 +20,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
-                                        <ul class="dropdown-menu">
-                                            <li> @Html.ActionLink("Student Details", "Index", "Student")</li>
-                                            <li> @Html.ActionLink("Marks", "Mark", "Student")</li>
-                                        </ul>
-                                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
+                        <ul class="dropdown-menu">
+                            <li> @Html.ActionLink("Student Details", "Index", "Student")</li>
+                            <li> @Html.ActionLink("Marks", "Mark", "Student")</li>
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
             </div>
@@ -38,7 +39,7 @@
             <p>&copy; @DateTime.Now.Year - GOPI KRISHNA</p>
         </footer>
     </div>
-
+    <script src="~/Scripts/Script.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

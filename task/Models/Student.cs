@@ -34,12 +34,5 @@ namespace task.Models
 
     
 
- /*   public class DBstudent: DbContext
-    {
-            public DbSet<Student> student { get; set; }
-            
-                            
-
-    } */
 
 

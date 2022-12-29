@@ -1,10 +1,11 @@
-﻿@model task.Models.Marks
+﻿@model task.Models.Student
 
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <h2>Home</h2>
-<h2>Welcome, @Session["StudentName"] </h2>
+<h2>Welcome,@Html.DisplayFor(model => Model.StudentName)</h2>
 

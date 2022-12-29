@@ -28,22 +28,47 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.StudentId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.StudentName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Address)
-    </td>
-    <td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
 
-        @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.StudentId })
-    </td>
-</tr>
+                @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }, new { @class = "btn btn-primary" }) |
+                <input type="submit" id="btnDelete" value="Delete" class="btn btn-danger" onclick="Delete('@Url.Action("Delete","Student",new {id=item.StudentId})')" />
+                @*<input type="button"  id="btnDelete"  value="Delete" class="btn btn-danger" />*@
+                @*             @Html.ActionLink("Delete", "Delete", new { id = item.StudentId }, new { @class = "btn btn-primary" })
+                *@
+            </td>
+        </tr>
     }
 
 </table>
+
+@*<script>
+        $(document).ready(function(){
+            $("#btnDelete").on("click", function () {
+            if (confirm("Do you want to delete this Customer?"))
+            var id = $("#txtStudentId").val();
+            $.ajax({
+            type: "POST",
+            url: '@Url.Action("Delete", "Student")',
+            data: { id : id },
+            success: function () {
+                alert("Deleted Student ");
+
+            },
+            error: function(){
+                alert("Error");
+            }
+            });
+
+            });
+        })
+</script>*@

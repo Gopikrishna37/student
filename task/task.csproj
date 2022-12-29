@@ -52,6 +52,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Notify, Version=1.0.2.0, Culture=neutral, PublicKeyToken=60f94bdcb4e14c0b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Notify.1.0.2\lib\net40\Notify.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -131,6 +134,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalClass.cs" />
     <Compile Include="Migrations\202212160847371_creatingstudenttable.cs" />
     <Compile Include="Migrations\202212160847371_creatingstudenttable.designer.cs">
       <DependentUpon>202212160847371_creatingstudenttable.cs</DependentUpon>
@@ -143,12 +147,21 @@
     <Compile Include="Migrations\202212171426159_update.designer.cs">
       <DependentUpon>202212171426159_update.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202212200649201_changes.cs" />
-    <Compile Include="Migrations\202212200649201_changes.Designer.cs">
-      <DependentUpon>202212200649201_changes.cs</DependentUpon>
+    <Compile Include="Migrations\202212201125142_removedsubjectid.cs" />
+    <Compile Include="Migrations\202212201125142_removedsubjectid.Designer.cs">
+      <DependentUpon>202212201125142_removedsubjectid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212201131427_addedfk.cs" />
+    <Compile Include="Migrations\202212201131427_addedfk.Designer.cs">
+      <DependentUpon>202212201131427_addedfk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212230528131_changeindatatype.cs" />
+    <Compile Include="Migrations\202212230528131_changeindatatype.Designer.cs">
+      <DependentUpon>202212230528131_changeindatatype.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DBstudent.cs" />
+    <Compile Include="Models\Dto.cs" />
     <Compile Include="Models\Marks.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Subject.cs" />
@@ -176,6 +189,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Script.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -194,13 +208,14 @@
     <Content Include="Views\Student\Edit.cshtml" />
     <Content Include="Views\Student\Delete.cshtml" />
     <Content Include="Views\Student\Add.cshtml" />
-    <Content Include="Views\Student\Mark.cshtml" />
     <Content Include="Views\Student\Home.cshtml" />
     <Content Include="Views\Student\signin.cshtml" />
     <Content Include="Views\Shared\_LayoutPage1.cshtml" />
+    <Content Include="Views\Student\Mark.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -225,8 +240,14 @@
     <EmbeddedResource Include="Migrations\202212171426159_update.resx">
       <DependentUpon>202212171426159_update.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202212200649201_changes.resx">
-      <DependentUpon>202212200649201_changes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202212201125142_removedsubjectid.resx">
+      <DependentUpon>202212201125142_removedsubjectid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212201131427_addedfk.resx">
+      <DependentUpon>202212201131427_addedfk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212230528131_changeindatatype.resx">
+      <DependentUpon>202212230528131_changeindatatype.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
