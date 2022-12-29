@@ -23,7 +23,7 @@
 
         <div class="form-horizontal">
             <h4>Sign In </h4>
-            <hr />
+            
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
@@ -45,7 +45,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Signin" class="btn btn-default" />  @Html.ActionLink("Add New User", "Add")
+                    <input type="submit" value="Signin" class="btn btn-success" />  @Html.ActionLink("Add New User", "Add", null, new { @class = "btn btn-primary" })
                 </div>
             </div>
         </div>

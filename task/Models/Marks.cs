@@ -15,12 +15,20 @@ namespace task.Models
         public int ID { get; set; }
         public int SubjectId { get; set; }
         public int Score { get; set; }
-       public int StudentId { get; set; }
+        public int StudentId { get; set; }
 
         [ForeignKey("StudentId")]
         public virtual Student Student
         {
             get; set;
         }
+
+        [ForeignKey("SubjectId")]
+        public virtual Subject Subject
+        {
+            get; set;
+        }
+
+
     }
 }

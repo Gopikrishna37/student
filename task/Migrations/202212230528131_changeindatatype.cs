@@ -3,7 +3,7 @@ namespace task.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class changes : DbMigration
+    public partial class changeindatatype : DbMigration
     {
         public override void Up()
         {
