@@ -1,0 +1,28 @@
+h1{
+    text-align: center;
+    text-transform: uppercase;
+    background-color: blueviolet;
+}
+
+#demo,#round{
+    text-align: center;
+    text-transform: uppercase;
+    font-style: Red;
+}
+
+
+table,tr{
+    border: 3px solid black;
+    font-size: larger;  
+
+}
+td,thead{
+    border: 3px solid black;
+    width: 1%;
+    height: 1%;
+    padding: 10%;
+}
+#gameboard{
+    border: 3px solid black;
+    width: 50%;
+}
