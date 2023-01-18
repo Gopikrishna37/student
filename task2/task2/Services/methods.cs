@@ -17,33 +17,41 @@ namespace task2.Services
 
     public class Methods : Imethods
     {
+        /*public dynamic deleted(doj) {
+            if (staff.Isdeleted == true)
+            {
+                return "Data already deleted";
+            }
+            return false;
+           }*/
         public dynamic GetStaff(staff staff)
         {
             /* using (StudentEntities1 db = new StudentEntities1())
-             {
+           
                  var obj = db.staffs.ToList();
                  return obj;
              }*/
+
+
             using (StudentEntities1 db = new StudentEntities1())
             {
 
-                var name1 = (from st in db.staffs where st.Name.Contains(staff.Name) select st).ToList();
-                var id = (from st in db.staffs where st.ID == staff.ID select st).ToList();
-                var doj = (from st in db.staffs where st.DateOfJoin == staff.DateOfJoin select st).ToList();
-
-                if (doj.Count() == 1)
+                /*var doj = from st in db.staffs where st.DateOfJoin == staff.DateOfJoin ||st.Name.Contains(staff.Name)|| st.ID == staff.ID && st.Isdeleted == false select st;*/
+                // var doj1 = db.staffs.AsQueryable().Where(x => x.Isdeleted == false);
+                // List<staff> obj=new List<staff>();
+                 
+                if (staff != null)
                 {
-                    return doj;
-                }
-                else
-                if (id.Count() == 1)
-                {
-                    return id;
-                }
-                else
-                if (name1.Count() == 1)
-                {
-                    return name1;
+                   var  obj= db.staffs.AsQueryable().Where(x => x.Isdeleted == false).Where(s => s.DateOfJoin == staff.DateOfJoin|| s.ID == staff.ID||  s.Name == staff.Name).AsQueryable();
+                  
+                    if (obj!=null)
+                    {
+                        return obj.ToList();
+                    }
+                    else
+                    {
+                        return "data not found";
+                    }
                 }
                 else
                 {
@@ -67,13 +75,20 @@ namespace task2.Services
             using (StudentEntities1 db = new StudentEntities1())
             {
 
-                var val1 = from st in db.staffs where st.ID == staff.ID select staff;
+                var val1 = (from st in db.staffs where st.ID == staff.ID && st.Isdeleted == false select staff).FirstOrDefault();
                 if (val1 != null)
                 {
-                    db.Entry(staff).State = EntityState.Modified;
+
+                    val1.ID = 1;
+                    val1.Name = staff.Name;
+                    val1.Username = staff.Username;
+                    val1.Password = staff.Name;
+                    val1.DateOfJoin = staff.DateOfJoin;
+                    val1.Isdeleted = false;
+                    db.Entry(val1).State = EntityState.Modified;
                     db.SaveChanges();
                 }
-                return staff;
+                return val1;
             }
         }
 
@@ -81,22 +96,18 @@ namespace task2.Services
         {
             using (var db = new StudentEntities1())
             {
-                List<staff>  st = (from x in db.staffs
-                    .Where(s => s.ID == staff.ID)
-                         select x).ToList();
-                if (st != null)
+                var st = db.staffs.Where(s => s.Isdeleted == false && s.ID == staff.ID).FirstOrDefault();
+                    
+                if (st!=null)
                 {
-                    if (st[0].Isdeleted == false)
-                    {
-                        st[0].Isdeleted =true;
-                        db.Entry(st[0]).State = EntityState.Modified;
-                        db.SaveChanges();
+                    st.Isdeleted = true;
+                    db.Entry(st).State = EntityState.Modified;
+                    db.SaveChanges();   
+                }
 
-                    }
-                    else
-                    {
-                        return "already deleted";
-                    }
+                else
+                {
+                    return "already deleted";
                 }
 
                 return "deleted successfully";
