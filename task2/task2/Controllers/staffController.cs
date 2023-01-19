@@ -30,7 +30,7 @@ namespace task2.Controllers
             }
             catch (Exception e)
             {
-                return Json("Failed to success");
+                return e;
             }
         }
 
@@ -77,16 +77,16 @@ namespace task2.Controllers
             {
                 using(StudentEntities1 db=new StudentEntities1())
                 {
-                    var st=db.staffs.Find(staff.ID);
+                    /*var st=db.staffs.Find(staff.ID);
                    
                     if (staff != null)
                     {
                         db.Entry(staff).State = EntityState.Modified;
                         db.SaveChanges();
                     }
-                    return Json(staff);
-                    /* Imethods m = new Methods();
-                     return Json(m.PutStaff(staff));*/
+                    return Json(staff);*/
+                    Imethods m = new Methods();
+                    return Json(m.PutStaff(staff));
                 }
 
             }
