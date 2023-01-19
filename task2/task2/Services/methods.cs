@@ -17,13 +17,7 @@ namespace task2.Services
 
     public class Methods : Imethods
     {
-        /*public dynamic deleted(doj) {
-            if (staff.Isdeleted == true)
-            {
-                return "Data already deleted";
-            }
-            return false;
-           }*/
+        
         public dynamic GetStaff(staff staff)
         {
             /* using (StudentEntities1 db = new StudentEntities1())
@@ -36,17 +30,28 @@ namespace task2.Services
             using (StudentEntities1 db = new StudentEntities1())
             {
 
-                /*var doj = from st in db.staffs where st.DateOfJoin == staff.DateOfJoin ||st.Name.Contains(staff.Name)|| st.ID == staff.ID && st.Isdeleted == false select st;*/
-                // var doj1 = db.staffs.AsQueryable().Where(x => x.Isdeleted == false);
-                // List<staff> obj=new List<staff>();
                  
                 if (staff != null)
                 {
-                   var  obj= db.staffs.AsQueryable().Where(x => x.Isdeleted == false).Where(s => s.DateOfJoin == staff.DateOfJoin|| s.ID == staff.ID||  s.Name == staff.Name).AsQueryable();
-                  
+                    var obj = db.staffs.Where(x => x.Isdeleted == false).AsQueryable();
+                    /*.Where(s => s.DateOfJoin == staff.DateOfJoin|| s.ID == staff.ID||  s.Name == staff.Name).AsQueryable();*/
+
+                    if (!string.IsNullOrEmpty(staff.Name))
+                    {
+                        obj = obj.Where(s => s.Name.Contains(staff.Name)).AsQueryable();
+                    }
+                    if (staff.DateOfJoin!=null)
+                    {
+                        obj = obj.Where(s => s.DateOfJoin== staff.DateOfJoin).AsQueryable();
+                    }
+                    if (staff.ID >0)
+                    {
+                        obj = obj.Where(s => s.ID == staff.ID).AsQueryable();
+                    }
+                    
                     if (obj!=null)
                     {
-                        return obj.ToList();
+                        return obj.ToList(); 
                     }
                     else
                     {
@@ -70,21 +75,20 @@ namespace task2.Services
             }
             return staff;
         }
+
+
         public dynamic PutStaff(staff staff)
         {
             using (StudentEntities1 db = new StudentEntities1())
             {
 
-                var val1 = (from st in db.staffs where st.ID == staff.ID && st.Isdeleted == false select staff).FirstOrDefault();
+                var val1 = (from st in db.staffs where st.ID == staff.ID && st.Isdeleted == false select st).FirstOrDefault();
                 if (val1 != null)
                 {
-
-                    val1.ID = 1;
-                    val1.Name = staff.Name;
-                    val1.Username = staff.Username;
-                    val1.Password = staff.Name;
-                    val1.DateOfJoin = staff.DateOfJoin;
-                    val1.Isdeleted = false;
+                    val1.Name =staff.Name==null? val1.Name :staff.Name;
+                    val1.Username = staff.Username == null ? val1.Username : staff.Username; 
+                    val1.Password = staff.Password == null ? val1.Password : staff.Password; 
+                    val1.DateOfJoin = staff.DateOfJoin==null  ? val1.DateOfJoin : staff.DateOfJoin; 
                     db.Entry(val1).State = EntityState.Modified;
                     db.SaveChanges();
                 }
