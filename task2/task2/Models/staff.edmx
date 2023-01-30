@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="StudentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="logindetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="staff_id" Type="int" />
+          <Property Name="login_time" Type="date" />
+          <Property Name="is_deleted" Type="bit" />
+          <Property Name="token" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="staff">
           <Key>
             <PropertyRef Name="ID" />
@@ -22,13 +32,41 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Isdeleted" Type="bit" />
         </EntityType>
+        <Association Name="FK__logindeta__staff__45F365D3">
+          <End Role="staff" Type="Self.staff" Multiplicity="0..1" />
+          <End Role="logindetails" Type="Self.logindetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staff">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="logindetails">
+              <PropertyRef Name="staff_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="StudentModelStoreContainer">
+          <EntitySet Name="logindetails" EntityType="Self.logindetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="staff" EntityType="Self.staff" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__logindeta__staff__45F365D3" Association="Self.FK__logindeta__staff__45F365D3">
+            <End Role="staff" EntitySet="staff" />
+            <End Role="logindetails" EntitySet="logindetails" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StudentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="logindetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="staff_id" Type="Int32" />
+          <Property Name="login_time" Type="DateTime" Precision="0" />
+          <Property Name="is_deleted" Type="Boolean" />
+          <Property Name="token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="staff" Relationship="Self.FK__logindeta__staff__45F365D3" FromRole="logindetails" ToRole="staff" />
+        </EntityType>
         <EntityType Name="staff">
           <Key>
             <PropertyRef Name="ID" />
@@ -45,16 +83,45 @@
           <Property Name="UpdatedOn" Type="DateTime" Precision="0" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Isdeleted" Type="Boolean" />
+          <NavigationProperty Name="logindetails" Relationship="Self.FK__logindeta__staff__45F365D3" FromRole="staff" ToRole="logindetails" />
         </EntityType>
-        <EntityContainer Name="StudentEntities1" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK__logindeta__staff__45F365D3">
+          <End Role="staff" Type="Self.staff" Multiplicity="0..1" />
+          <End Role="logindetails" Type="Self.logindetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staff">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="logindetails">
+              <PropertyRef Name="staff_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="logindetails" EntityType="Self.logindetail" />
           <EntitySet Name="staffs" EntityType="Self.staff" />
+          <AssociationSet Name="FK__logindeta__staff__45F365D3" Association="Self.FK__logindeta__staff__45F365D3">
+            <End Role="staff" EntitySet="staffs" />
+            <End Role="logindetails" EntitySet="logindetails" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StudentModelStoreContainer" CdmEntityContainer="StudentEntities1">
+        <EntityContainerMapping StorageEntityContainer="StudentModelStoreContainer" CdmEntityContainer="StudentEntities">
+          <EntitySetMapping Name="logindetails">
+            <EntityTypeMapping TypeName="StudentModel.logindetail">
+              <MappingFragment StoreEntitySet="logindetails">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+                <ScalarProperty Name="login_time" ColumnName="login_time" />
+                <ScalarProperty Name="is_deleted" ColumnName="is_deleted" />
+                <ScalarProperty Name="token" ColumnName="token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="staffs">
             <EntityTypeMapping TypeName="StudentModel.staff">
               <MappingFragment StoreEntitySet="staff">

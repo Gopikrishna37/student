@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -8,16 +9,35 @@ using System.Web.Http;
 using task2.Models;
 using task2.Services;
 
+
 namespace task2.Controllers
 {
     public class StaffController : ApiController
     {
+
+
+        //[BasicAuthentication]
+
+     /*   [BasicAuthentication]
+        [HttpGet]
+        public dynamic getdetails()
+        {
+                *//*return "authentication success";*//*
+                using (StudentEntities db = new StudentEntities())
+                {
+                    var obj = db.staffs.Select(s=>s.ID).ToList();
+                    string data = JsonConvert.SerializeObject(obj);
+                    var usermodel = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                    return Json(usermodel);
+                }
+        }*/
+
         [HttpPost]
         public dynamic Post(staff staff)
         {
             try
             {
-                /* using (StudentEntities1 db = new StudentEntities1())
+                /* using (StudentEntities db = new StudentEntities())
                  {
                      db.staffs.Add(staff);
                      db.SaveChanges();
@@ -35,23 +55,23 @@ namespace task2.Controllers
         }
 
 
-/*
-        [HttpGet]
-        public dynamic Getall()
+        /*
+                [HttpGet]
+                public dynamic Getall()
 
-        {
+                {
 
-            try
-            {
-                Imethods m = new Methods();
-                return Json(m.GetStaff());
+                    try
+                    {
+                        Imethods m = new Methods();
+                        return Json(m.GetStaff());
 
-            }
-            catch (Exception e)
-            {
-                return e;
-            }
-        }*/
+                    }
+                    catch (Exception e)
+                    {
+                        return e;
+                    }
+                }*/
 
         [HttpGet]
         public dynamic Get(staff staff)
@@ -75,7 +95,7 @@ namespace task2.Controllers
         {
             try
             {
-                using(StudentEntities1 db=new StudentEntities1())
+                using (StudentEntities db = new StudentEntities())
                 {
                     /*var st=db.staffs.Find(staff.ID);
                    
@@ -90,7 +110,7 @@ namespace task2.Controllers
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex;
             }
@@ -101,7 +121,7 @@ namespace task2.Controllers
         {
             try
             {
-                using(StudentEntities1 db=new StudentEntities1())
+                using(StudentEntities db=new StudentEntities())
                 {
                     
                     if (staff != null)
@@ -126,13 +146,22 @@ namespace task2.Controllers
                     return BadRequest("Not a valid student id");
                 Imethods m = new Methods();
                 return Json(m.DeleteStaff(staff));
-                
+
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 return Ex;
             }
 
         }
+
+        /*public dynamic getdetails(string token)
+        {
+            using (StudentEntities db = new StudentEntities())
+            {
+                var obj = db.staffs.ToList();
+                return obj;
+            }
+        }*/
     }
 }

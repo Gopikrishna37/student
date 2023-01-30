@@ -13,10 +13,10 @@ namespace task2.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StudentEntities1 : DbContext
+    public partial class StudentEntities : DbContext
     {
-        public StudentEntities1()
-            : base("name=StudentEntities1")
+        public StudentEntities()
+            : base("name=StudentEntities")
         {
         }
     
@@ -25,6 +25,7 @@ namespace task2.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<logindetail> logindetails { get; set; }
         public virtual DbSet<staff> staffs { get; set; }
     }
 }
