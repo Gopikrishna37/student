@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace task.Controllers
 {
+    [SessionTimeout]
     public class HomeController : Controller
     {
         public ActionResult Index()

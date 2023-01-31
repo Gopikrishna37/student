@@ -4,11 +4,12 @@ using task.Models;
 using System.Data.Entity;
 using System.Net;
 using System;
-
+using task.Service;
 //changes
 //checking git status
 namespace task.Controllers
 {
+    
     public class StudentController : Controller
     { 
 
@@ -22,7 +23,8 @@ namespace task.Controllers
                new Student() { StudentId = 7, StudentName = "Rob" , Address = "chennai"}
            };*/
        public DBstudent db = new DBstudent();
-
+        [SessionTimeout]
+        [HttpGet]
         public ActionResult Index()
         {
             return View(db.student.ToList());
@@ -37,19 +39,22 @@ namespace task.Controllers
         [HttpPost]
         public ActionResult Add(Student std)
         {
+            Mail m = new Mail();
             if (ModelState.IsValid)
             {
+
                 db.student.Add(std);
                 db.SaveChanges();
-
+                string mail=m.Sender(std.Email);
                 return Home(std.StudentId);
 
             }
             return View(std);
         }
 
-
+        
         [HttpGet]
+        [SessionTimeout]
         public ActionResult Edit(int? Id)
         {
             if (Id == null)
@@ -64,7 +69,9 @@ namespace task.Controllers
             return View(student);
         }
 
+        
         [HttpPost]
+        [SessionTimeout]
         public ActionResult Edit(Student std)
         {
             if (ModelState.IsValid)
@@ -76,22 +83,22 @@ namespace task.Controllers
             }
             return View(std);
         }
-/*
-        [HttpGet]
-        public ActionResult Delete(int? Id)
-        {
-            if (Id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Student student = db.student.Find(Id);
-            if (student == null)
-            {
-                return HttpNotFound();
-            }
-            return View(student);
-        }*/
-
+        /*
+                [HttpGet]
+                public ActionResult Delete(int? Id)
+                {
+                    if (Id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    Student student = db.student.Find(Id);
+                    if (student == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(student);
+                }*/
+        
         [HttpPost]
         public ActionResult Delete(int Id)
         {
@@ -110,6 +117,7 @@ namespace task.Controllers
         }
 
         [HttpPost]
+
         public ActionResult signin(Student std)
         {
             var obj = db.student.Where(a => a.Username.Equals(std.Username) && a.Password.Equals(std.Password)).FirstOrDefault();
@@ -129,8 +137,9 @@ namespace task.Controllers
             }
            
         }
-
+        
         [HttpGet]
+        [SessionTimeout]
         public ActionResult Home(int? id)
         {
 
@@ -142,7 +151,7 @@ namespace task.Controllers
             }
             return View();
         }
-
+        [SessionTimeout]
         [HttpGet]
         public ActionResult Mark()
         {

@@ -20,14 +20,14 @@ namespace task2.Services
         
         public dynamic GetStaff(staff staff)
         {
-            /* using (StudentEntities1 db = new StudentEntities1())
+            /* using (StudentEntities db = new StudentEntities())
            
                  var obj = db.staffs.ToList();
                  return obj;
              }*/
 
 
-            using (StudentEntities1 db = new StudentEntities1())
+            using (StudentEntities db = new StudentEntities())
             {
 
                  
@@ -68,7 +68,7 @@ namespace task2.Services
 
         public dynamic PostStaff(staff staff)
         {
-            using (StudentEntities1 db = new StudentEntities1())
+            using (StudentEntities db = new StudentEntities())
             {
                 db.staffs.Add(staff);
                 db.SaveChanges();
@@ -79,7 +79,7 @@ namespace task2.Services
 
         public dynamic PutStaff(staff staff)
         {
-            using (StudentEntities1 db = new StudentEntities1())
+            using (StudentEntities db = new StudentEntities())
             {
 
                 var val1 = (from st in db.staffs where st.ID == staff.ID && st.Isdeleted == false select st).FirstOrDefault();
@@ -98,7 +98,7 @@ namespace task2.Services
 
         public dynamic DeleteStaff(staff staff)
         {
-            using (var db = new StudentEntities1())
+            using (var db = new StudentEntities())
             {
                 var st = db.staffs.Where(s => s.Isdeleted == false && s.ID == staff.ID).FirstOrDefault();
                     
