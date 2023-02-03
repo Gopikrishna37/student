@@ -130,7 +130,7 @@ namespace task.Controllers
                 {
                     Session["StudentId"] = obj.StudentId;
                     Session["StudentName"] = obj.StudentName;
-                    Log.Info(obj.StudentName+"logined successfully");
+                    Log.Info(obj.StudentName +" logined successfully");
                     return Home(obj.StudentId);
                 }
                 else
