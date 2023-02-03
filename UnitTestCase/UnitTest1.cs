@@ -1,17 +1,123 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using task2.Models;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using task.Models;
 using System.Collections.Generic;
 using task.Controllers;
 using System.Web.Mvc;
+using task2.Controllers;
+using Newtonsoft.Json;
+using task2.Services;
+using Xunit;
 
 namespace UnitTestCase
 {
     [TestClass]
     public class UnitTest1
     {
+        /*public dynamic PostStaff(staff staff)
+        {
+            using (StudentEntities db = new StudentEntities())
+            {
+                db.staffs.Add(staff);
+                db.SaveChanges();
+            }
+            return staff;
+        }*/
+
+        
+        [TestMethod]
+        [DataRow("vinod",1,"kovai")]
+        public void PostStaff(string name,int id,string address)
+        {
+            // Arrange
+            var methods = new Methods();
+            staff staff = new staff()
+            {
+                Name = name,
+                ID = id,
+                Address = address
+            };
+            // Act
+            var response = staff;
+
+                // Assert
+                
+                Assert.IsNotNull(response);
+        }
+
+        [TestMethod]
+        [DataRow(null, null)]
+        public void PostStaff2(string name,  string address)
+        {
+            // Arrange
+            staff staff = new staff()
+            {
+                Name = name,
+                Address = address
+            };
+            // Act
+            var response = staff;
+
+            // Assert
+
+            Assert.AreEqual(null,response.Name);
+            
+            Assert.AreEqual(null, response.Address);
+        }
+
+        [TestMethod]
+        [DataRow(null, null)]
+        public void PostStaff3(string name, string address)
+        {
+            // Arrange
+            staff staff = new staff()
+            {
+                Name = name,
+                Address = address
+            };
+            // Act
+            var response = staff;
+
+            // Assert
+
+            Assert.IsNull(response.Name);
+
+            Assert.IsNull(response.Address);
+        }
+
+        [TestMethod]
+        [DataRow(null, null, null)]
+        public void TestPutMethod(int id,string name, string password)
+        {
+            
+            var staff = new staff { ID = id, Name = name, Password = password};
+            //
+            
+            var controller = new Methods();
+            var result = staff;
+            Assert.IsNull(result);
+        }
+
+
+        [TestMethod]
+        public void GetStaff()
+        {
+            // Arrange
+            Methods staffController = new Methods();
+
+            // Act
+            var staff1 = new staff { ID = 2, Name = "Raj", Password = "12345", DateOfJoin = DateTime.Now };
+            var response = staffController.GetStaff(staff1);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Count > 0);
+        }
+
+
         [TestMethod]
         public void Signin_ReturnsHome()
         {
@@ -23,9 +129,9 @@ namespace UnitTestCase
             var result = controller.signin(student);
 
             // Assert
-            
+
             Assert.IsNotNull(result);
-    
+
         }
 
         [TestMethod]
@@ -57,57 +163,7 @@ namespace UnitTestCase
             Assert.IsNotNull(result);
         }
 
-        /* [TestMethod]
-         public async Task GetAllProductsAsync_ShouldReturnAllProducts()
-         {
-             var testProducts = GetTestProducts();
-             var controller = new staff();
 
-             var result = await controller.getdetails();
-             Assert.AreEqual(testProducts.Count, result.Count);
-         }
-
-         [TestMethod]
-         public void GetProduct_ShouldReturnCorrectProduct()
-         {
-             var testProducts = GetTestProducts();
-             var controller = new task2(testProducts);
-
-             var result = controller.GetProduct(4) as OkNegotiatedContentResult<Product>;
-             Assert.IsNotNull(result);
-             Assert.AreEqual(testProducts[3].Name, result.Content.Name);
-         }
-
-         [TestMethod]
-         public async Task GetProductAsync_ShouldReturnCorrectProduct()
-         {
-             var testProducts = GetTestProducts();
-             var controller = new task2(testProducts);
-
-             var result = await controller.GetProductAsync(4) as OkNegotiatedContentResult<Product>;
-             Assert.IsNotNull(result);
-             Assert.AreEqual(testProducts[3].Name, result.Content.Name);
-         }
-
-         [TestMethod]
-         public void GetProduct_ShouldNotFindProduct()
-         {
-             var controller = new task2(GetTestProducts());
-
-             var result = controller.GetProduct(999);
-             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
-         }
-
-         private List<Product> GetTestProducts()
-         {
-             var testProducts = new List<Product>();
-             testProducts.Add(new Product { Id = 1, Name = "Demo1", Price = 1 });
-             testProducts.Add(new Product { Id = 2, Name = "Demo2", Price = 3.75M });
-             testProducts.Add(new Product { Id = 3, Name = "Demo3", Price = 16.99M });
-             testProducts.Add(new Product { Id = 4, Name = "Demo4", Price = 11.00M });
-
-             return testProducts;
-         }*/
     }
-    }
+}
 

@@ -5,24 +5,17 @@ using System.Data.Entity;
 using System.Net;
 using System;
 using task.Service;
+using log4net;
 //changes
 //checking git status
 namespace task.Controllers
 {
     
     public class StudentController : Controller
-    { 
+    {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(StudentController));
 
-        /*   public static List<Student> studentList = new List<Student>{
-               new Student() { StudentId = 1, StudentName = "John", Address = "chennai" } ,
-               new Student() { StudentId = 2, StudentName = "Steve",  Address = "delhi"} ,
-               new Student() { StudentId = 3, StudentName = "Bill",  Address = "bengalore" } ,
-               new Student() { StudentId = 4, StudentName = "Ram" , Address = "hydrabad" } ,
-               new Student() { StudentId = 5, StudentName = "Ron" , Address = "madurai" } ,
-               new Student() { StudentId = 6, StudentName = "Chris" , Address = "vellore" } ,
-               new Student() { StudentId = 7, StudentName = "Rob" , Address = "chennai"}
-           };*/
-       public DBstudent db = new DBstudent();
+        public DBstudent db = new DBstudent();
         [SessionTimeout]
         [HttpGet]
         public ActionResult Index()
@@ -39,17 +32,27 @@ namespace task.Controllers
         [HttpPost]
         public ActionResult Add(Student std)
         {
-            Mail m = new Mail();
-            if (ModelState.IsValid)
+            try
+            {
+                Mail m = new Mail();
+                if (ModelState.IsValid)
+                {
+                    string mail = m.Sender(std.Email, std.StudentName);
+                    db.student.Add(std);
+                    db.SaveChanges();
+                    Log.Info(std);
+                    return Home(std.StudentId);
+
+                }
+                return View(std);
+            }
+            catch(Exception e)
             {
 
-                db.student.Add(std);
-                db.SaveChanges();
-                string mail=m.Sender(std.Email);
-                return Home(std.StudentId);
-
+                Log.Error(e);
+                Log.Fatal(e); 
+                return View(e);
             }
-            return View(std);
         }
 
         
@@ -120,20 +123,31 @@ namespace task.Controllers
 
         public ActionResult signin(Student std)
         {
-            var obj = db.student.Where(a => a.Username.Equals(std.Username) && a.Password.Equals(std.Password)).FirstOrDefault();
-            if (obj != null)
+            try
             {
-                Session["StudentId"] = obj.StudentId;
-                Session["StudentName"] = obj.StudentName;
-                return Home(obj.StudentId);
+                var obj = db.student.Where(a => a.Username.Equals(std.Username) && a.Password.Equals(std.Password)).FirstOrDefault();
+                if (obj != null)
+                {
+                    Session["StudentId"] = obj.StudentId;
+                    Session["StudentName"] = obj.StudentName;
+                    Log.Info(obj.StudentName +" logined successfully");
+                    return Home(obj.StudentId);
+                }
+                else
+                {
+                    //action = "ErrorPage"; controller = "UnAutherized";      
+                    ViewBag.Message = "UserName or password is wrong";
+                    TempData["strLoginErrorInfo"] = "Invalid Username or Password";
+                    TempData.Keep();
+                    Log.Info(TempData["strLoginErrorInfo"]);
+                    return RedirectToAction("signin");
+                }
             }
-            else
+            catch(Exception e)
             {
-                //action = "ErrorPage"; controller = "UnAutherized";      
-                ViewBag.Message = "UserName or password is wrong";
-                TempData["strLoginErrorInfo"] = "Invalid Username or Password";
-                TempData.Keep();
-                return RedirectToAction("signin");
+                Log.Error(e);
+                Log.Fatal(e);
+                return View(e);
             }
            
         }

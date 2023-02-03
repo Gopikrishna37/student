@@ -18,19 +18,19 @@ namespace task2.Controllers
 
         //[BasicAuthentication]
 
-     /*   [BasicAuthentication]
+        [BasicAuthentication]
         [HttpGet]
         public dynamic getdetails()
         {
-                *//*return "authentication success";*//*
-                using (StudentEntities db = new StudentEntities())
-                {
-                    var obj = db.staffs.Select(s=>s.ID).ToList();
-                    string data = JsonConvert.SerializeObject(obj);
-                    var usermodel = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
-                    return Json(usermodel);
-                }
-        }*/
+            return "authentication success";
+            using (StudentEntities db = new StudentEntities())
+            {
+                var obj = db.staffs.Select(s => s.ID).ToList();
+                string data = JsonConvert.SerializeObject(obj);
+                var usermodel = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                return Json(usermodel);
+            }
+        }
 
         [HttpPost]
         public dynamic Post(staff staff)
@@ -73,7 +73,7 @@ namespace task2.Controllers
                     }
                 }*/
 
-        [HttpGet]
+    /*    [HttpGet]
         public dynamic Get(staff staff)
         {
 
@@ -87,7 +87,7 @@ namespace task2.Controllers
             {
                 return e;
             }
-        }
+        }*/
 
 
         [HttpPut]
