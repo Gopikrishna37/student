@@ -103,10 +103,13 @@ margin-right:-100px;
     position: relative;
     top: 10px;
 }
+.navbar-brand {
+    margin-top: -7px;
+}
 
 .navbar-collapse{
     position: relative;
-    top: 10px;
+    top: 0px;
 }
 .productsidenav {
     width: 150px;

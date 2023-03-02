@@ -33,7 +33,7 @@
                     </li>
                     @if (Session["Sellerlogin"] != null && Session["Sellername"] != null)
                     {
-                        <li style=" color: white; top: -15px; left: 550px;">  @Html.Partial("_PartialPage") </li>
+                        <li>  @Html.Partial("_PartialPage") </li>
                     }
 
                 </ul>
@@ -48,7 +48,7 @@
             <h2>
                 <ul id="ul">
                     <li style="padding-bottom:30px">@Html.ActionLink("Existing", "Existing", "Seller")</li>
-                    <li>@Html.ActionLink("Add Product", "Existing", "Seller")</li>
+                    <li>@Html.ActionLink("Add Product", "AddProduct", "Seller")</li>
                 </ul>
             </h2>
         </div>
