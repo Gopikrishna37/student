@@ -1,0 +1,10 @@
+﻿
+@if (Session["Sellername"] != null)
+{
+    @Html.ActionLink("Hello " + @Session["Sellername"] + " !", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", style = "color:white;" })
+}
+@if (Session["Username"] != null)
+{
+    @Html.ActionLink("Hello " + @Session["Username"] + " !", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", style = "color:white;" })
+
+}

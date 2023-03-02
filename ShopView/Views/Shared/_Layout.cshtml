@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SHOPZONE</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/ShopZone.js")
+    @*
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="color:white; background-color: #2874f0  !important;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index","Product")" class="navbar-brand" style="color:white;">SHOPZONE</a>
+
+            </div>
+            <div class="navbar-collapse collapse" style="color:white;">
+                <ul class="nav navbar-nav "  style="list-style-type: none;display: flex;, color:white;">
+                    @using(Html.BeginForm("Search", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                    <li style="color:white;">
+
+                        <input type="text" name="word" class="form-control nav-input" id="search" placeholder="" />
+                        
+                        @*@Html.TextBox("search", null, new { @class = "form-control nav-input", @style = "width:200px;" , @placeholder = "Enter Search Term" })
+                        *@<input class="hidden" type="submit" value="Search" />
+
+                    </li>
+                        <li> <span class="glyphicon glyphicon-search"></span></li>
+                    }
+                    
+                    <li><a href="@Url.Action("Login","Users")" style="color: white; padding-left: 50px;">User</a></li>
+
+                    <li><a href="@Url.Action("SellerLogin","Seller")" style="color: white; ">Seller</a></li>
+                    <li><a href="@Url.Action("Contact","Home")" style="color: white;  ">Cart</a></li>
+                  @if (Session["Userlogin"] != null && Session["Username"] != null)
+                  {
+                    <li style=" color: white; top: -15px; left: 550px;">  @Html.Partial("_PartialPage") </li>
+                  }
+                </ul>
+                
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container body-content">
+        <div class="container-fluid h-100">
+
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - ShopZone</p>
+            </footer>
+
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ShopZone")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+

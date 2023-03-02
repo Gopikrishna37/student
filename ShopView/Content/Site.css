@@ -1,0 +1,162 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+ul {
+    list-style-type: none;
+}
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+#importfile{
+    position:relative;
+    top:25px;
+    left:400px;
+}
+#sample{
+    position: relative;
+    top: 25px;
+    left: 275px;
+}
+
+#login_ul {
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    left: 650px;
+}
+
+h4 {
+    background-color: lightgray;
+    font-display: block;
+}
+.uploadbox {
+    padding-top:10px;
+}
+.button {
+    padding-top: 30px;
+    margin-left: 700px;
+    padding-bottom: 30px;
+}
+
+#filebox {
+    position: relative;
+    left: 500px;
+}
+.container-fluid {
+padding-left:0px;
+padding-right:0px; 
+margin-left:75px;
+margin-right:-100px;
+}
+#ul{
+    padding-left:unset;
+    width:50px;
+}
+
+
+.nav-input {
+    top: 8px;
+    position: relative;
+}
+.navbar .dropdown-toggle, .navbar .dropdown-menu a {
+    cursor: pointer;
+}
+
+.navbar .dropdown-item.active, .navbar .dropdown-item:active {
+    color: inherit;
+    text-decoration: none;
+    background-color: inherit;
+}
+
+.navbar .dropdown-item:focus, .navbar .dropdown-item:hover {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+.glyphicon {
+    position: relative;
+    top: -15px;
+    left: 200px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.navbar-header{
+    position: relative;
+    top: 10px;
+}
+
+.navbar-collapse{
+    position: relative;
+    top: 10px;
+}
+.productsidenav {
+    width: 150px;
+    position: fixed;
+    z-index: 1;
+    top: 50px;
+    background: #eee;
+    overflow-x: hidden;
+    height: 100%;
+    padding: 8px 0;
+    margin: 15px -170px;
+}
+.sellersidenav {
+    width: 170px;
+    position: fixed;
+    z-index: 1;
+    top: 50px;
+    background: #eee;
+    overflow-x: hidden;
+    height: 100%;
+    padding: 8px 0;
+}
+
+.loginbutton{
+    padding-top:10px;
+    padding-left:10px;
+}
+
+.sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #2196F3;
+        display: block;
+    }
+img{
+    width:350px;
+}
+.sidenav a:hover {
+            color: #064579;
+        }
+@media (min-width: 767px) {
+    .navbar .dropdown-toggle:not(.nav-link)::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .5em;
+        vertical-align: 0;
+        border-bottom: .3em solid transparent;
+        border-top: .3em solid transparent;
+        border-left: .3em solid;
+    }
+}

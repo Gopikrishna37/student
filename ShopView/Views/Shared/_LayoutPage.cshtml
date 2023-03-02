@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SHOPZONE</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/ShopZone.js")
+    @*
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="color:white; background-color: #2874f0  !important;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index","Home")" style="color:white;" class="navbar-brand">SHOPZONE</a>
+             @*   @Html.ActionLink("SHOPZONE", "Index", "Home", new { @class = "navbar-brand" })*@
+            </div>
+            <div class="navbar-collapse collapse" style="color:white;">
+                <ul class="nav navbar-nav " style="color:white;">
+                    <li style="color:white;">
+
+                        <input type="text" class="form-control nav-input" id="myInput" placeholder="Enter Search Term" />
+                    </li>
+                    @if (Session["Sellerlogin"] != null && Session["Sellername"] != null)
+                    {
+                        <li style=" color: white; top: -15px; left: 550px;">  @Html.Partial("_PartialPage") </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @*<nav id="sidebarMenu"
+         class="collapse d-lg-block sidebar collapse bg-white">
+*@
+        <div class="sellersidenav">
+            <h2>
+                <ul id="ul">
+                    <li style="padding-bottom:30px">@Html.ActionLink("Existing", "Existing", "Seller")</li>
+                    <li>@Html.ActionLink("Add Product", "Existing", "Seller")</li>
+                </ul>
+            </h2>
+        </div>
+  @*  </nav>
+  *@  <div class="container body-content">
+        <div class="container-fluid">
+
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - ShopZone</p>
+            </footer>
+
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+

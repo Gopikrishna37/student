@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "AddProduct";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>AddProduct</h2>
+<div id="AddProduct" style="align-content:center">
+    <div class="uploadbox">
+
+        @using (Html.BeginForm("ImportFromExcel", "Seller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <h4>Upload File</h4>        
+            <label id="importfile">Import File</label><input  type="file" name="file" id="filebox" />
+                    <div>
+                      <label id="sample">Download Sample Import File</label><div id="filebox">@Html.ActionLink("Download Formet", "Download")</div>
+                    <div class="button" style="margin-right:auto">
+                        <input type="submit" button id="upload" value="Import" class="btn-success" />
+                        <input type="reset" button id="clear" onclick="reset()" value="Clear" class=" btn-light" />
+                    </div>
+
+                     </div>
+        }
+
+
+    </div>
+</div>
+<script>
+    function reset() {
+        await delay(5000);
+        document.getElementById("filebox").value = "";
+        
+    }
+
+</script>
+
