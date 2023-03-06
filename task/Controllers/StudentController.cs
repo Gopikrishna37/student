@@ -37,7 +37,7 @@ namespace task.Controllers
                 Mail m = new Mail();
                 if (ModelState.IsValid)
                 {
-                    string mail = m.Sender(std.Email, std.StudentName);
+                    string mail = m.Sender(std.Email, "ok");
                     db.student.Add(std);
                     db.SaveChanges();
                     Log.Info(std);

@@ -10,7 +10,7 @@ namespace task.Service
 {
     public class Mail
     {
-        public string Sender(string Email, string name)
+        public string Sender(string Email, string Otp)
         {
             try
             {
@@ -24,24 +24,23 @@ namespace task.Service
                 // add the recevier email address
                 message.To.Add(MailboxAddress.Parse(Email));
                 message.Subject = "Account Creation";
-                
-                //add subject
-                /*       message.Body = new TextPart
-                      {
-                          Text = @"
-                                      Dear User, 
 
-                                      Your account has been created successfully.
+            //add subject
+            /* message.Body = new TextPart
+             {
+                 Text = @"
+                                   Dear User, 
 
-                                      Regards,
-                                      XYZ Team
-                                  "
-                      };
-                */    
-                // Get HTML page using file path
-                string html = File.ReadAllText("C://Users//BE HAPPY//source/repos/task/task//Views//msg.html");
+                                   Your account has been created successfully.
 
-                html = html.Replace("User", name);
+                                   Regards,
+                                   XYZ Team
+                               "
+             };
+*/
+            // Get HTML page using file path
+                string html = File.ReadAllText("C://Users//BE HAPPY//source/repos/task/ShopViewWebAPI//Service//msg.html");
+                html = html.Replace("otp", Otp);
                 // HTML body
                 var builder = new BodyBuilder
                 {

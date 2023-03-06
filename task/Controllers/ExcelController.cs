@@ -1,12 +1,8 @@
 ﻿using ClosedXML.Excel;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -56,25 +52,7 @@ namespace task.Controllers
                 }
             }
         }
-        /* using (ExcelPackage pck = new ExcelPackage())
-         {
-             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Student");
-             ws.Cells["A1"].LoadFromCollection(studentdetails, true);
-             // Load your collection "accounts"
-
-             Byte[] fileBytes = pck.GetAsByteArray();
-             Response.Clear();
-             Response.Buffer = true;
-             Response.AddHeader("content-disposition", "attachment;filename=DataTable.xlsx");
-             // Replace filename with your custom Excel-sheet name.
-
-             Response.Charset = "";
-             Response.ContentType = "application/vnd.ms-excel";
-             StringWriter sw = new StringWriter();
-             Response.BinaryWrite(fileBytes);
-             Response.End();
-         }
-         return RedirectToAction("Excel");*/
+     
     
 
         [HttpPost]
@@ -141,16 +119,6 @@ namespace task.Controllers
                             }
                         }
 
-                        /*  conString = ConfigurationManager.ConnectionStrings["DBstudent"].ConnectionString;
-                          using (SqlConnection con = new SqlConnection(conString))
-                          {
-                              using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(con))
-                              {
-                                  //Set the database table name.  
-                                  sqlBulkCopy.DestinationTableName = "Students";
-                                  con.Open();
-                                  sqlBulkCopy.WriteToServer(dt);
-                                  con.Close();*/
                         using (DBstudent db = new DBstudent())
                         {
                             // Create a new Student object.
@@ -175,18 +143,12 @@ namespace task.Controllers
                     }
 
 
-                    //catch (Exception ex)  
-                    //{  
-                    //    throw ex;  
-                    //}  
                     catch (Exception e)
                     {
                         return Json("error" + e.Message);
                     }
-                    //return RedirectToAction("Index");  
                 }
             }
-            //return View(postedFile);  
             return Json("no files were selected !");
         }
     }

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<DBcontext.DBModels.Product>
+
+@{
+    ViewBag.Title = "Existing";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    @Styles.Render("~/Content/css")
+
+}
+
+<br />
+
+    <div class="body-content">
+        <div id="Existing" class="row" >
+            @foreach (var item in Model)
+            {
+
+                <div class="col-md-4">
+                    <h2>@item.Name - @item.Model</h2>
+                    <img src="@item.ImageLink" />
+                    <p><ul><li>@item.Price</li><li>Rating: @item.Price</li></ul></p>
+                </div>
+
+            }
+        </div>
+
+    </div>
+
+
+
