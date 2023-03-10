@@ -31,10 +31,9 @@
                     {
                     <li style="color:white;">
 
-                        <input type="text" name="word" placeholder="Enter search word..." class="form-control nav-input" id="search" placeholder="" />
+                        <input type="text" name="word" placeholder="Enter search word..." class="form-control nav-input" id="search" />
                         
-                        @*@Html.TextBox("search", null, new { @class = "form-control nav-input", @style = "width:200px;" , @placeholder = "Enter Search Term" })
-                        *@<input class="hidden" type="submit" value="Search" />
+                      <input class="hidden" type="submit" value="Search" />
 
                     </li>
                         <li> <span class="glyphicon glyphicon-search"></li>
@@ -43,7 +42,25 @@
                     <li><a href="@Url.Action("Login","Users")" style="color: white; padding-left: 50px;">User</a></li>
 
                     <li><a href="@Url.Action("SellerLogin","Seller")" style="color: white; ">Became a Seller</a></li>
-                    <li><a href="@Url.Action("Contact","Home")" style="color: white;  ">Cart</a></li>
+                    <li>
+                        <i class="bi bi-cart"></i>
+                        @if (Session["Userlogin"] != null)
+                        {
+                            <a href="@Url.Action("Cart","Users",new { UserId=Session["Userlogin"]})" style="color: white;  ">
+                                Cart
+                                <span style="position: relative;left: 40px;top: -50px;" class="count">3</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Login", "Users")" style="color: white;  ">
+                                Cart
+                                <span style="position: relative;left: 40px;top: -50px;" class="count">3</span>
+                            </a>
+                        }
+
+
+                    </li>
                   @if (Session["Userlogin"] != null && Session["Username"] != null)
                   {
                     <li style=" color: white; top: -15px; left: 550px;">  @Html.Partial("_PartialPage") </li>

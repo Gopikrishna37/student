@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShopzoneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ShopzoneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Activity">
           <Key>
             <PropertyRef Name="ID" />
@@ -18,11 +18,22 @@
           <Property Name="Exception" Type="varchar" MaxLength="500" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="CartID" />
+          </Key>
+          <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="CreatedOn" Type="date" />
+          <Property Name="UpdatedOn" Type="date" />
+          <Property Name="Total_Product" Type="int" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="20" />
           <Property Name="Model" Type="varchar" MaxLength="20" />
           <Property Name="Price" Type="int" />
@@ -35,6 +46,7 @@
           <Property Name="Date" Type="date" />
           <Property Name="UpdatedOn" Type="date" />
           <Property Name="CreatedOn" Type="date" />
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Seller">
           <Key>
@@ -72,6 +84,30 @@
           <Property Name="CreatedOn" Type="date" />
           <Property Name="UpdatedOn" Type="date" />
         </EntityType>
+        <Association Name="FK__Cart__CustomerID__6FE99F9F">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cart__ProductID__70DDC3D8">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Product__Custome__3C69FB99">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -96,11 +132,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="shopzone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="shopzone1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ShopzoneModelStoreContainer">
           <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seller" EntityType="Self.Seller" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cart__CustomerID__6FE99F9F" Association="Self.FK__Cart__CustomerID__6FE99F9F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cart__ProductID__70DDC3D8" Association="Self.FK__Cart__ProductID__70DDC3D8">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
           <AssociationSet Name="FK__Product__Custome__3C69FB99" Association="Self.FK__Product__Custome__3C69FB99">
             <End Role="Users" EntitySet="Users" />
             <End Role="Product" EntitySet="Product" />
@@ -110,8 +159,7 @@
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShopzoneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -147,6 +195,7 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="0" />
           <NavigationProperty Name="User" Relationship="Self.FK__Product__Custome__3C69FB99" FromRole="Product" ToRole="Users" />
           <NavigationProperty Name="Seller" Relationship="Self.FK__Product__SellerI__3D5E1FD2" FromRole="Product" ToRole="Seller" />
+          <NavigationProperty Name="Carts" Relationship="ShopzoneModel.FK__Cart__ProductID__70DDC3D8" FromRole="Product" ToRole="Cart" />
         </EntityType>
         <EntityType Name="Seller">
           <Key>
@@ -185,6 +234,7 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="0" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Products" Relationship="Self.FK__Product__Custome__3C69FB99" FromRole="Users" ToRole="Product" />
+          <NavigationProperty Name="Carts" Relationship="ShopzoneModel.FK__Cart__CustomerID__6FE99F9F" FromRole="User" ToRole="Cart" />
         </EntityType>
         <Association Name="FK__Product__Custome__3C69FB99">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
@@ -223,7 +273,96 @@
             <End Role="Seller" EntitySet="Sellers" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <EntitySet Name="Carts" EntityType="ShopzoneModel.Cart" />
+          <AssociationSet Name="FK__Cart__CustomerID__6FE99F9F" Association="ShopzoneModel.FK__Cart__CustomerID__6FE99F9F">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cart__ProductID__70DDC3D8" Association="ShopzoneModel.FK__Cart__ProductID__70DDC3D8">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <FunctionImport Name="obj" ReturnType="Collection(ShopzoneModel.obj_Result)">
+          <Parameter Name="FirstName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="shop" ReturnType="Collection(ShopzoneModel.shop_Result)">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="shopzone" ReturnType="Collection(ShopzoneModel.shopzone_Result)">
+          <Parameter Name="FirstName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="shopzone1" ReturnType="Collection(ShopzoneModel.shopzone1_Result)" />
         </EntityContainer>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="CartID" />
+          </Key>
+          <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="0" />
+          <Property Name="Total_Product" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="ShopzoneModel.FK__Cart__CustomerID__6FE99F9F" FromRole="Cart" ToRole="User" />
+          <NavigationProperty Name="Product" Relationship="ShopzoneModel.FK__Cart__ProductID__70DDC3D8" FromRole="Cart" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__Cart__CustomerID__6FE99F9F">
+          <End Type="ShopzoneModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="ShopzoneModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cart__ProductID__70DDC3D8">
+          <End Type="ShopzoneModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ShopzoneModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="obj_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Model" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="String" Name="ImageLink" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Rating" Nullable="true" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="shop_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Model" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="String" Name="ImageLink" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Rating" Nullable="true" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="shopzone_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Model" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="String" Name="ImageLink" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Rating" Nullable="true" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="shopzone1_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Model" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Price" Nullable="true" />
+          <Property Type="String" Name="ImageLink" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Rating" Nullable="true" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -301,7 +440,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="ShopzoneModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="Total_Product" ColumnName="Total_Product" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CartID" ColumnName="CartID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="shopzone" FunctionName="ShopzoneModel.Store.shopzone">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopzoneModel.shopzone_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="shopzone1" FunctionName="ShopzoneModel.Store.shopzone1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ShopzoneModel.shopzone1_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -1,4 +1,5 @@
-﻿using DBcontext.ServiceModels;
+﻿using DBcontext.DBModels;
+using DBcontext.ServiceModels;
 using ShopViewWebAPI.Service;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,52 @@ namespace ShopViewWebAPI.Controllers
                 return e;
             }
         }
+
+
+        [Route("api/UserApi/GetCart")]
+        [HttpGet]
+        public dynamic GetCart(int content)
+        {
+            try
+            {
+                if (content != 0)
+                {
+                   var result= U.GetCart(content);
+                    return result;
+                }
+                else
+                {
+                    return "error";
+                }
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+        }
+
+        [Route("api/UserApi/Cart")]
+    [HttpPost]
+    public dynamic PostCart(Cart cart)
+    {
+        try
+        {
+            if (cart != null)
+            {
+                U.PostCart(cart);
+                return "ok";
+            }
+            else
+            {
+                return "error";
+            }
+        }
+        catch (Exception e)
+        {
+            return e;
+        }
     }
+
+}
 
 }

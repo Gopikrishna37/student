@@ -2,12 +2,17 @@
 @if (Session["Sellername"] != null)
 {
     <li>@Html.ActionLink("Hello " + @Session["Sellername"] + " !", "Existing", "Seller", routeValues: null, htmlAttributes: new { style = "color:white;  left: 550px;" })</li>
-    <li>@Html.ActionLink("LogOut", "SellerLogin", "Seller", new { style = "color:Red;  left: 550px;" })</li>
+    <li>
+      
+    @Html.ActionLink("LogOut", "SellerLogin", "Seller", new { style = "color:Red;  left: 550px; top:-20" })</li>
 }
 @if (Session["Username"] != null)
 {
     <li>
         @Html.ActionLink("Hello " + @Session["Username"] + " !", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", style = "color:white;     left: 350px;" })
     </li>
-    <li>@Html.ActionLink("LogOut", "Login", "Users", new { style = "color:Red;  margin-left: 350px" }) </li>
+    <li>
+        <i class="material-icons pmd-list-icon pmd-sm"></i>
+        <a href="@Url.Action("Login", "Users")"  style = " color:Red; margin-left: 350px" >Logout</a>   
+    </li>
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Web.Mvc;
@@ -17,8 +18,9 @@ namespace ShopView.Controllers
         {
             client = new HttpClient();
             client.BaseAddress = baseAddress;
-        }
-
+            
+          }
+        
         public ActionResult Index()
         {
             return View("Index","Home");
@@ -27,6 +29,7 @@ namespace ShopView.Controllers
         [HttpGet]
         public ActionResult Login(UserLogin userLogin)
         {
+        
             return View(userLogin);
         }
 
@@ -41,8 +44,17 @@ namespace ShopView.Controllers
            if (response.IsSuccessStatusCode)
             {
                 var temp = response.Content.ReadAsStringAsync().Result;
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<String>(temp);
+                if (user == "ok")
+                {
  
-                return RedirectToAction("Login", userLogin);
+                    return RedirectToAction("Login", userLogin);
+                }
+                else
+                {
+                   
+                    return RedirectToAction("Login");
+                }
             }
             return HttpNotFound("UserLogin");
            
@@ -90,6 +102,62 @@ namespace ShopView.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return HttpNotFound("UserLogin");
+        }
+
+        [HttpGet]
+        public ActionResult Cart(int UserId)
+        {
+  //          string customer_id = Session["Userlogin"].ToString(); 
+           // int number_customer_id= (int)Session["Userlogin"];
+//            int.TryParse(customer_id, out number_customer_id);
+            if (UserId != 0) { 
+            
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/GetCart?content="+ UserId).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var temp = response.Content.ReadAsStringAsync().Result;
+                    var cart = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CartwithProduct>>(temp);
+                    if (cart != null)
+                    {
+                        return View(cart);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("UserLogin");
+                }
+            }
+            return HttpNotFound("UserLogin");
+
+        }
+
+        [HttpPost]
+        public ActionResult Cart1(int ProductId,int? UserId)
+        {
+            if (UserId != null)
+            {
+                var cart = new Cart() { ProductID = ProductId, CustomerID = UserId };
+                string data = JsonConvert.SerializeObject(cart);
+                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = client.PostAsync(client.BaseAddress + "/Cart", content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var temp = response.Content.ReadAsStringAsync().Result;
+                    return RedirectToAction("Cart", "Users");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Users");
+            }
+            return View();
         }
     }
 }

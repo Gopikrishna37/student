@@ -145,12 +145,83 @@ margin-right:-100px;
         color: #2196F3;
         display: block;
     }
-img{
-    width:350px;
+img {
+    width: 350px;
+    height: 250px;
+}
+#productname{
+    font-weight:300;
+    font:bolder;
+}
+#price{
+    color:red;
+}
+.checked {
+    color: orange;
 }
 .sidenav a:hover {
-            color: #064579;
+    color: #064579;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+    .overlay:target {
+        visibility: visible;
+        opacity: 1;
+    }
+.btn-Orange {
+    background-color: #ff6a00;
+    color:white;
+}
+.btn-Yellow{
+    background-color: orange;
+    color: white;
+}
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+
+    .popup h2 {
+        margin-top: 0;
+        color: #333;
+        font-family: Tahoma, Arial, sans-serif;
+    }
+
+    .popup .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+    }
+
+        .popup .close:hover {
+            color: #06D85F;
         }
+
+    .popup .content {
+        max-height: 30%;
+        overflow: auto;
+    }
+
 @media (min-width: 767px) {
     .navbar .dropdown-toggle:not(.nav-link)::after {
         display: inline-block;

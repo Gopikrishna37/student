@@ -17,6 +17,7 @@ namespace ShopViewWebAPI.Views.SellerApi
         dynamic SellerLogin(SellerLogin sellerLogin);
         dynamic SellerExisting();
         dynamic FileImport(List<DBcontext.ServiceModels.Product> file);
+        dynamic Delete(int ProductId);
     }
     public class method : IsellerMethods
     {
@@ -128,6 +129,30 @@ namespace ShopViewWebAPI.Views.SellerApi
             
         }
 
+        public dynamic Delete(int ProductId)
+        {
+            try
+            {
+                var temp = (from Product in _shopzoneEntities.Products where Product.ProductID == ProductId select Product).FirstOrDefault();
+                if (temp != null)
+                {
+
+                    temp.UpdatedOn = DateTime.Now;
+                    temp.IsDeleted = true;
+                    _shopzoneEntities.Entry(temp).State = EntityState.Modified;
+                    _shopzoneEntities.SaveChanges();
+                    return "ok";
+                }
+                else
+                {
+                    return "failed to delete";
+                }
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+        }
 
         public dynamic FileImport(List<DBcontext.ServiceModels.Product> product)
         {

@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="@Url.Action("Index","Home")" style="color:white;" class="navbar-brand">SHOPZONE</a>
-             @*   @Html.ActionLink("SHOPZONE", "Index", "Home", new { @class = "navbar-brand" })*@
+                @*   @Html.ActionLink("SHOPZONE", "Index", "Home", new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse" style="color:white;">
                 <ul class="nav navbar-nav " style="color:white;">
@@ -42,33 +42,34 @@
     </div>
 
     @*<nav id="sidebarMenu"
-         class="collapse d-lg-block sidebar collapse bg-white">
-*@
-        <div class="sellersidenav">
-            <h2>
-                <ul id="ul">
-                    <li style="padding-bottom:30px">@Html.ActionLink("Existing", "Existing", "Seller")</li>
-                    <li>@Html.ActionLink("Add Product", "AddProduct", "Seller")</li>
-                </ul>
-            </h2>
-        </div>
-  @*  </nav>
-  *@  <div class="container body-content">
-        <div class="container-fluid">
-
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - ShopZone</p>
-            </footer>
-
-        </div>
+        class="collapse d-lg-block sidebar collapse bg-white">
+    *@
+    <div class="sellersidenav">
+        <h2>
+            <ul id="ul">
+                <li style="padding-bottom:30px">@Html.ActionLink("Existing", "Existing", "Seller")</li>
+                <li>@Html.ActionLink("Add Product", "AddProduct", "Seller")</li>
+            </ul>
+        </h2>
     </div>
+    @*  </nav>
+    *@  <div class="container body-content">
+            <div class="container-fluid">
 
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - ShopZone</p>
+                </footer>
+
+            </div>
+    </div>
+    
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
+
 </html>
 
 
