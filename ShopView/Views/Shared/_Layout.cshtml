@@ -26,23 +26,23 @@
 
             </div>
             <div class="navbar-collapse collapse" style="color:white;">
-                <ul class="nav navbar-nav "  style="list-style-type: none;display: flex;, color:white;">
+                <ul class="nav navbar-nav "  style="list-style-type: none; display: flex; color:white;">
                     @using(Html.BeginForm("Search", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                     <li style="color:white;">
 
-                        <input type="text" name="word" class="form-control nav-input" id="search" placeholder="" />
+                        <input type="text" name="word" placeholder="Enter search word..." class="form-control nav-input" id="search" placeholder="" />
                         
                         @*@Html.TextBox("search", null, new { @class = "form-control nav-input", @style = "width:200px;" , @placeholder = "Enter Search Term" })
                         *@<input class="hidden" type="submit" value="Search" />
 
                     </li>
-                        <li> <span class="glyphicon glyphicon-search"></span></li>
+                        <li> <span class="glyphicon glyphicon-search"></li>
                     }
                     
                     <li><a href="@Url.Action("Login","Users")" style="color: white; padding-left: 50px;">User</a></li>
 
-                    <li><a href="@Url.Action("SellerLogin","Seller")" style="color: white; ">Seller</a></li>
+                    <li><a href="@Url.Action("SellerLogin","Seller")" style="color: white; ">Became a Seller</a></li>
                     <li><a href="@Url.Action("Contact","Home")" style="color: white;  ">Cart</a></li>
                   @if (Session["Userlogin"] != null && Session["Username"] != null)
                   {
