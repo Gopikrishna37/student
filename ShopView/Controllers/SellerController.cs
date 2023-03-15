@@ -51,8 +51,19 @@ namespace ShopView.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var temp = response.Content.ReadAsStringAsync().Result;
-                return RedirectToAction("SellerLogin", sellerLogin);
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<String>(temp);
+                if (user == "ok")
+                {
+                    Session["message"] = null;
+                    return RedirectToAction("SellerLogin", sellerLogin);
+                }
+                else
+                {
+                    Session["message"] = user;
+                    return RedirectToAction("Login");
+                }
             }
+
             return HttpNotFound("SellerLogin");
 
         }
@@ -121,8 +132,8 @@ namespace ShopView.Controllers
             return View();
         }
 
-      
-        
+
+
         [HttpGet]
         [Session]
         public ActionResult AddProduct()
@@ -196,7 +207,7 @@ namespace ShopView.Controllers
                                     ExcelCompare e = new ExcelCompare();
 
                                     var output = e.Compare(dt);
-                                   
+
                                     if (output is bool)
                                     {
                                         List<ProductItem> db = new List<ProductItem>();
@@ -237,10 +248,10 @@ namespace ShopView.Controllers
                                     }
                                     else
                                     {
-                                        
-                                            string store = "D:/";
 
-                                            string fileName = "Error_"+ DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
+                                        string store = "D:/";
+
+                                        string fileName = "Error_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
                                         using (var workbook = new XLWorkbook())
                                         {
                                             var worksheet = workbook.Worksheets.Add("Sheet1");
@@ -252,7 +263,7 @@ namespace ShopView.Controllers
                                             using (MemoryStream stream = new MemoryStream())
                                             {
                                                 workbook.SaveAs(stream);
-                                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",fileName);
+                                                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                                             }
                                         }
                                     }
@@ -265,13 +276,34 @@ namespace ShopView.Controllers
                     {
                         return View(e);
                     }
-                    
+
                 }
 
             }
             return View();
 
         }
-        
+
+        [HttpPost]
+        public ActionResult Delete(int? ProductId)
+        {
+         
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress + "/Delete?ProductId="+ ProductId).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var temp = response.Content.ReadAsStringAsync().Result;
+                if (temp == "ok")
+                {
+                    return RedirectToAction("Existing");
+                }
+                else
+                {
+                    return RedirectToAction("Existing");
+                }
+            }
+            return RedirectToAction("Existing");
+        }
     }
 }

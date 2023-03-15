@@ -11,6 +11,9 @@
         <EntityTypeShape EntityType="ShopzoneModel.User" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
         <AssociationConnector Association="ShopzoneModel.FK__Product__Custome__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="ShopzoneModel.FK__Product__SellerI__3D5E1FD2" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ShopzoneModel.Cart" Width="1.5" PointX="5.25" PointY="4.125" />
+        <AssociationConnector Association="ShopzoneModel.FK__Cart__CustomerID__6FE99F9F" />
+        <AssociationConnector Association="ShopzoneModel.FK__Cart__ProductID__70DDC3D8" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

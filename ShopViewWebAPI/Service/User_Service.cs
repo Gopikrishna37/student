@@ -12,6 +12,8 @@ namespace ShopViewWebAPI.Service
     {
         dynamic UserSignIn(UserSignIn userSingIn);
         dynamic UserLogin(UserLogin userLogin);
+        dynamic PostCart(Cart cart);
+        dynamic GetCart(int id);
     }
     public class User_method:IUser_Service
     {
@@ -96,5 +98,48 @@ namespace ShopViewWebAPI.Service
             }
         }
 
+        public dynamic GetCart(int id)
+        {
+            try
+            {
+                _shopzoneEntities.Configuration.ProxyCreationEnabled = false;
+                _shopzoneEntities.Configuration.LazyLoadingEnabled = false;
+                var data = (from cart in _shopzoneEntities.Carts where cart.CustomerID==id  join pr in _shopzoneEntities.Products on cart.ProductID equals pr.ProductID select new 
+                {
+                    ProductID =pr.ProductID,
+                    Name =pr.Name,
+                    Model =pr.Model,
+                    Price = pr.Price,
+                    ImageLink = pr.ImageLink,
+                    CartID = cart.CartID,
+                    CustomerID = cart.CustomerID
+                }).ToList();
+                return data;
+
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+
+        }
+
+        public dynamic PostCart(Cart cart)
+        {
+            try
+            {
+                cart.CreatedOn = DateTime.Now;
+                cart.Total_Product = +1;
+                var data = _shopzoneEntities.Carts.Add(cart);
+                _shopzoneEntities.SaveChanges();
+                return data;
+
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+
+        }
     }
 }

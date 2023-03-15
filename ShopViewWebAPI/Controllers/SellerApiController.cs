@@ -1,14 +1,9 @@
 ﻿using DBcontext.ServiceModels;
-using ShopViewWebAPI.Service;
 using ShopViewWebAPI.Views.SellerApi;
 using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.Http;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using System.Text;
-using System.Net.Http;
+
 
 namespace ShopViewWebAPI.Controllers
 {
@@ -57,6 +52,19 @@ namespace ShopViewWebAPI.Controllers
             {
                 return e;
             }
+        }
+
+        [Route("api/SellerApi/Delete")]
+        [HttpGet]
+        public dynamic Delete(int ProductId)
+        {
+
+
+            var result = m.Delete(ProductId);
+            return result;
+            // return data;
+
+
         }
 
         [HttpGet]

@@ -36,7 +36,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" onclick="myFunction()" class="btn btn-default" />
+                    <input type="submit" value="Login" onclick="myFunction()" class="btn btn-primary" />
                 </div>
             </div>
         </div>
@@ -65,9 +65,10 @@ else
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" onclick="myFunction()" class="btn btn-default" />
+                    <input type="submit" value="OTP" onclick="myFunction()" class="btn btn-primary" />
                 </div>
-            </div>
+                <span style="background-color: Red; left: 18%; position: relative"></span>
+              </div>
 
             @Html.ActionLink("Add New Seller", "SellerSingIn", null, new { @class = "btn btn-primary" })
         </div>

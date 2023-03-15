@@ -18,6 +18,7 @@ namespace DBcontext.DBModels
         public User()
         {
             this.Products = new HashSet<Product>();
+            this.Carts = new HashSet<Cart>();
         }
     
         public int CustomerID { get; set; }
@@ -36,5 +37,7 @@ namespace DBcontext.DBModels
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

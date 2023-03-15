@@ -1,0 +1,29 @@
+﻿@model IEnumerable<DBcontext.ServiceModels.CartwithProduct>
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Session["Username"]'s Cart</h2>
+
+<div class="body-content">
+    <div id="Existing" class="row">
+        @foreach (var item in Model)
+        {
+
+        <div class="col-md-4">
+            <a href="#@item.ProductID" data-toggle="modal"><img src="@item.ImageLink" /></a>
+            <table>
+                <tr id="productname">@item.Name - @item.Model</tr>
+                <tr id="price"><td>Rs./</td><td>@item.Price</td>  </tr>
+                
+            </table>
+            @using (Html.BeginForm("Buy", "Product", FormMethod.Post))
+            {
+                @Html.EditorFor(model => @item.ProductID, new { htmlAttributes = new { @class = "form-control hidden" } })
+                <input type="submit" formaction="@Url.Action("Buy", "Product", new { id = @item.ProductID })" value="Buy Now" class="btn btn-Orange">
+            }
+        </div>
+        }
+</div>
+</div>

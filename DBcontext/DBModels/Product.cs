@@ -14,6 +14,12 @@ namespace DBcontext.DBModels
     
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            this.Carts = new HashSet<Cart>();
+        }
+    
         public int ProductID { get; set; }
         public string Name { get; set; }
         public string Model { get; set; }
@@ -30,5 +36,7 @@ namespace DBcontext.DBModels
     
         public virtual User User { get; set; }
         public virtual Seller Seller { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

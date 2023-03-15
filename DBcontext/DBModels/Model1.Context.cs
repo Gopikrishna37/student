@@ -12,6 +12,8 @@ namespace DBcontext.DBModels
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ShopzoneEntities : DbContext
     {
@@ -29,5 +31,38 @@ namespace DBcontext.DBModels
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Seller> Sellers { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
+    
+        public virtual ObjectResult<obj_Result> obj(string firstName)
+        {
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<obj_Result>("obj", firstNameParameter);
+        }
+    
+        public virtual ObjectResult<shop_Result> shop(string firstName)
+        {
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<shop_Result>("shop", firstNameParameter);
+        }
+    
+        public virtual ObjectResult<shopzone_Result> shopzone(string firstName)
+        {
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<shopzone_Result>("shopzone", firstNameParameter);
+        }
+    
+        public virtual ObjectResult<shopzone1_Result> shopzone1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<shopzone1_Result>("shopzone1");
+        }
     }
 }
